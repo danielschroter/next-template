@@ -1,0 +1,10 @@
+/* .form-identifier {
+  background-color: rgb(212, 219, 219);
+  padding-top: 20px;
+  background-image: url("../assets/bg-texture.png");
+} */
+
+.test {
+  background-color: rgba(46, 63, 79, 0.542);
+  backdrop-filter: blur(15px);
+}

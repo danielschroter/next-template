@@ -20,6 +20,17 @@ model Post {
   published Boolean  @default(false)
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+  comments  Comment[]
+}
+
+model Comment{
+  id  String @id @default(cuid())
+  message String 
+  createdAt DateTime @default(now())
+  postId  String
+  userId String
+  post Post @relation(fields:[postId], references: [id], onDelete: Cascade)  // Cascade defines that Comments are deleted in case a Post is deleted
+  user User @relation(fields: [userId], references: [id])
 }
 
 
@@ -59,6 +70,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   posts         Post[]
+  comments      Comment[]
 }
 
 model VerificationToken {

@@ -1,22 +1,36 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from './page.module.css'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import { getServerSession } from 'next-auth'
+"use client";
+import AddPost from "./components/AddPost";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import Post from "./components/Post";
+import { PostType } from "./types/PostType";
 
+const allPosts = async () => {
+  const response = await axios.get("/api/posts/getPosts");
+  return response.data;
+};
 
-const inter = Inter({ subsets: ['latin'] })
-
-
-export default async function Home() {
-  const session = await getServerSession(authOptions)
-
+export default function Home() {
+  const { data, error, isLoading } = useQuery<PostType[]>({
+    queryFn: allPosts,
+    queryKey: ["posts"],
+  });
+  if (error) return error;
+  if (isLoading) return "Loading...";
+  console.log(data);
   return (
     <main>
-      {!session?.user ?
-        <h1 className="text-lg py-5">Hello Next</h1>
-       : <h1 className="text-lg py-5">Hello {session?.user.name}</h1>
-       }
+      <AddPost />
+
+      {data?.map((post) => (
+        <Post
+          comments={post.comments}
+          id={post.id}
+          name={post.user.name}
+          avatar={post.user.image}
+          postTitle={post.title}
+        />
+      ))}
     </main>
-  )
+  );
 }
