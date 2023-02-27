@@ -17,11 +17,12 @@ export default function MyPosts() {
   });
 
   if (isLoading) return <h1>Loading...</h1>;
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       {data?.posts?.map((post) => (
         <EditPost
+          key={post.id}
           id={post.id}
           title={post.title}
           comments={post.comments}
