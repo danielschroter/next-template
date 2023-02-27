@@ -13,6 +13,7 @@ export default async function Dashboard() {
       <h1 className="text-2xl tracking-widest">
         Welcome back {session?.user?.name}
       </h1>
+
       <MyPosts />
     </main>
   );

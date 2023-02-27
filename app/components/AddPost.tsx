@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 export default function AddPost() {
   const [title, setTitle] = useState("");
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const queryClient = useQueryClient();
   let toastPostId: string;
 
   const { mutate } = useMutation(
@@ -23,6 +24,7 @@ export default function AddPost() {
       },
       onSuccess: (data) => {
         toast.success("Post has been made 🔥", { id: toastPostId });
+        queryClient.invalidateQueries(["posts"]); // Deletes Cache for["posts"] and make he posts appear immediately after posting
         setTitle("");
         setIsDisabled(false);
       },
