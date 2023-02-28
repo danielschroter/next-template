@@ -21,7 +21,9 @@ export default function Post({ id, avatar, name, postTitle, comments }) {
       </div>
       <div>
         <Link href={`/post/${id}`}>
-          <p className="text-sm font-bold text-gray-700">{comments?.length}</p>
+          <p className="text-sm font-bold text-gray-700">
+            {comments?.length} Comments
+          </p>
         </Link>
       </div>
     </div>
